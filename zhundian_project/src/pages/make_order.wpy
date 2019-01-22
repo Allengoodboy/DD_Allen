@@ -1,0 +1,273 @@
+<template>
+<view class='page'>
+    <navigator class='address' url='../pages/address_manage'>
+        <view class='address_class'>
+            <image src='../images/icon/location.png' class='icon'/>
+            <view class='text' wx:for='{{address_list}}' wx:if='{{item.id==currentid}}'>
+                <view class='name'>{{item.name}}</view>
+                <view class='tel'>{{item.tel}}</view>
+                <view class='content'>{{item.address}}</view>
+            </view>
+            <view class='arrow'></view>
+        </view>
+    </navigator>
+    <view class='item'>
+        <view class='content'>
+            <view class='title_text'>{{title}}</view>
+            <view class='detail_text'>单价： 40.00/小时(3小时起做)</view>
+        </view>
+        <wxc-counter number='3' min='3' max='{{10000}}' color='#333' class='counter'></wxc-counter>
+    </view>
+    <view class='detail'>
+        <view class='detail1'>
+            <view class='text'>服务时间:</view>
+            <view class='arrow'></view>
+        </view>
+        <view class='detail2'>
+            <view class='text'>优惠券:</view>
+            <view class='coupon'>省5元：代金券</view>
+            <view class='arrow'></view>
+        </view>
+        <view class='detail3'>
+            <view class='text'>订单备注:</view>
+            <input type='text' class='input'/>
+        </view>
+    </view>
+    <!-- <view class='checkbox'>
+        <checkbox class='radio'></checkbox>   
+        <view class='text'>我已查看并同意《用户协议》《隐私协议》</view>
+    </view> -->   
+    <!-- 欠缺复选按钮样式 -->
+    <view class='bottom'>
+        <view class='price'>实付：**</view>
+        <view class='book'>提交预约</view>
+    </view> 
+</view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  var address_list= require('../utils/data.js')
+  export default class Make_order extends wepy.page {
+    config = {
+      navigationBarTitleText: '下单预约',
+      usingComponents: {
+          'wxc-counter': '../../packages/@minui/wxc-counter/dist/index',
+          'wxc-popup': '../../packages/@minui/wxc-popup/dist/index'
+      }
+    }
+    components = {
+    }
+    data = {
+        address_list: address_list.getaddress(),
+        currentid: 1,
+        title: ''
+    }
+    computed = {
+    }
+
+    methods = {
+
+    }
+    events = {
+    }
+    onLoad(e) {
+        console.log(e)
+        let that= this
+        that.title=e.atitle
+        that.currentid= e.aid
+        that.$apply()
+    }
+    onShow() {
+        console.log('again')
+    }
+  }
+</script>
+
+<style lang="less">
+.checkbox{
+    margin-left:25rpx;
+    font-size: 22rpx;
+    .radio{
+        border-radius: 100%;
+        border-top: 3rpx solid #999;
+        border-right: 3rpx solid #999;        
+        width: 30rpx;
+        height: 30rpx;
+    }.text{
+        display: inline;
+    }
+}
+
+.address{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 140rpx;
+    border-bottom: 3rpx dashed grey;
+    margin-bottom: 30rpx;
+    background-color:#fff;
+    position: relative;
+    .address_class{
+        margin-left: 45rpx;
+        display: flex;
+        align-items: center;
+        .icon{
+            width: 30rpx;
+            height: 50rpx;
+            margin-right: 30rpx;
+        }
+        .text{
+            display:flex;
+            flex-wrap: wrap;
+            font-size: 26rpx;
+            background-color: #ffffff;
+            height: 80rpx;
+            width: 80%;
+            .name{
+                margin-right: 20rpx
+            }
+            .tel{
+                width:auto;
+            }
+            .content{
+                width: 100%;
+            }
+        }
+        .arrow{
+            border-top: 3rpx solid #999;
+            border-right: 3rpx solid #999;
+            position: absolute;
+            right: 50rpx;
+            width: 10rpx;
+            height: 10rpx;
+            transform: rotate(45deg);
+        }
+    }
+}
+.item{
+    display: flex;
+    align-items: center;
+    background-color:#ffffff;
+    padding: 45rpx;
+    width: 100%;
+    height: 120rpx;
+    margin-bottom: 30rpx;
+    .content{
+        width: 70%;
+        height: 120rpx;
+        .title_text{
+            margin-bottom: 15rpx;
+            font-size: 28rpx;
+        }
+        .detail_text{
+            font-size: 20rpx;
+        }
+    }
+    .counter{
+        display: block;
+        position: absolute;
+        right: 30rpx;
+        margin-bottom: 40rpx;
+    }
+}
+.detail{
+    background-color:#ffffff;
+    width: 100%;
+    height: 290rpx;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 8rpx;
+    font-size: 28rpx;
+    .detail1{
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: 75rpx;
+        width: 100%;
+        margin-bottom: 3rpx;
+        border-bottom: 2rpx solid #eeeeee;
+        .text{
+            padding: 8rpx 45rpx;
+        }
+        .arrow{
+            position: absolute;
+            border-top: 3rpx solid #999;
+            border-right: 3rpx solid #999;
+            right: 40rpx;
+            width: 10rpx;
+            height: 10rpx;
+            transform: rotate(45deg);
+        }
+    }
+    .detail2{
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: 75rpx;
+        width: 100%;
+        margin-bottom: 3rpx;
+        border-bottom: 2rpx solid #eeeeee;
+        .text{
+            padding: 8px 45rpx;
+        }.coupon{
+            position: absolute;
+            right: 80rpx;
+        }.arrow{
+            position: absolute;
+            border-top: 3rpx solid #999;
+            border-right: 3rpx solid #999;
+            right: 40rpx;
+            width: 10rpx;
+            height: 10rpx;
+            transform: rotate(45deg);
+        }
+    }
+    .detail3{
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: flex-start;
+        height: 150rpx;
+        width: 100%;
+        font-size: 28rpx;
+        .text{
+            margin-left:45rpx;
+            margin-right: 60rpx;
+        }
+        .input{
+            font-size: 28rpx;
+            width: 100%;
+            height: 60rpx;
+        }
+    }
+}
+.bottom{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    position: fixed;
+    bottom: 0;
+    height: 60rpx;
+    width: 100%;
+    background-color: #fff;
+    .price{
+        display: flex;
+        align-items: center;
+        padding-left:45rpx; 
+        font-size: 30rpx;
+        height: 60rpx;
+        width: 65%;
+    }
+    .book{
+        font-size: 40rpx;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 35%;
+        height: 60rpx;
+        background-color: gray;
+        color: #fff;
+    }
+}
+</style>
+

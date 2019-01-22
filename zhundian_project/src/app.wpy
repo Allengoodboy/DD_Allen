@@ -1,0 +1,64 @@
+
+
+<style lang="less">
+.page{
+  width: 100%;
+  background-color: #eeeeee;
+}
+</style>
+
+<script>
+import wepy from 'wepy'
+import 'wepy-async-function'
+export default class extends wepy.app {
+  config = {
+    pages: [
+      'pages/index',
+      'pages/make_order',
+      'pages/order',
+      'pages/coupon',
+      'pages/user',
+      'pages/nav_list',
+      'pages/detail',
+      'pages/address_manage'
+    ],
+    window: {
+      backgroundTextStyle: 'light',
+      navigationBarBackgroundColor: '#fff',
+      navigationBarTitleText: 'Demo',
+      navigationBarTextStyle: 'black',
+      enablePullDownRefresh: true
+    },
+    "tabBar": {
+      "color": "#999999",
+      "selectedColor": "#ff6a3c",
+      "backgroundColor": "#ffffff",
+      "borderStyle": "black",
+      "list": [{
+        "pagePath": "pages/index",
+        "text": "首页",
+        "iconPath": "images/icon/icon_home.png",
+        "selectedIconPath": "images/icon/icon_home_active.png"
+      }, {
+        "pagePath": "pages/order",
+        "text": "订单",
+        "iconPath": "images/icon/icon_classify.png",
+        "selectedIconPath": "images/icon/icon_classify_active.png"
+      }, {
+        "pagePath": "pages/coupon",
+        "text": "优惠券",
+        "iconPath": "images/icon/icon_shop_cart.png",
+        "selectedIconPath": "images/icon/icon_shop_cart_active.png"
+      }, {
+        "pagePath": "pages/user",
+        "text": "会员中心",
+        "iconPath": "images/icon/icon_info.png",
+        "selectedIconPath": "images/icon/icon_info_active.png"
+      }]
+    }      
+  }
+  globalData = {
+    userInfo: null
+  }
+}
+</script>

@@ -1,0 +1,123 @@
+<template>
+<view class='page'>
+    <view wx:for='{{arr}}'>
+        <image src='{{item.pic_Path}}' class='images'/>
+        <view class='content'>
+            <view class='tab'>
+                <view class='text'>服务内容</view>
+            </view>
+            <view class='detail'>{{item.content}}</view>
+        </view>
+        <view class='content'>
+            <view class='tab'>
+                <view class='text'>服务须知</view>
+            </view>
+            <view class='detail'>{{item.shouldknow}}</view>
+        </view>
+    </view>
+    <!-- 底部下单栏 -->
+    <view class='bottom'>
+        <view class='price'>
+            <view class='text'>40/小时</view>
+        </view>
+        <navigator class='book' url='../pages/make_order?atitle={{title}}'>下单</navigator>
+    </view>
+</view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  export default class Detail extends wepy.page {
+    config = {
+      navigationBarTitleText: this.title,
+    }
+    components = {
+    }
+    data = {
+        arr: [{
+            'pic_Path': '../images/pic/detail_1.jpg',
+            'content': '内容',
+            'shouldknow': '须知'
+            }],
+        title: '',
+        aindex: 0
+    }
+    computed = {
+    }
+    methods = {
+    }
+    events = {
+    }
+    onLoad(e) {
+        console.log(e)
+        let that=this
+        that.title= e.title
+        that.aindex= e.aindex
+        that.$apply()
+    }
+  }
+</script>
+
+<style lang="less">
+
+.images{
+    width:100%;
+    height: 300rpx;
+}
+.content{
+    // display: flex;
+    // flex-wrap: wrap;
+    background-color:#fff;
+    width: 100%;
+    height: 280rpx;
+    margin-bottom: 30rpx;
+    font-size: 28rpx;
+    .tab{
+        padding: 25rpx;
+        color: #ff9800;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        height: 40rpx;
+        border-left: 7rpx solid orange;
+    }
+    .detail{
+        color: black;
+        width: 100%;
+        height: 240rpx;
+        text-align: left;
+        margin-left: 25rpx;
+    }
+}
+.bottom{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    position:absolute;
+    bottom: 0;
+    height: 60rpx;
+    width: 100%;
+    .price{
+        display: flex;
+        align-items: center;
+        font-size: 25rpx;
+        height: 60rpx;
+        width: 65%;
+        .text{
+            margin-left: 25rpx;
+        }
+    }
+    .book{
+        font-size: 28rpx;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 35%;
+        height: 60rpx;
+        background-color: orange;
+        color: #fff;
+    }
+}
+
+</style>
+

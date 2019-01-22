@@ -1,0 +1,81 @@
+<template>
+<view class='page'>
+    <view wx:for='{{list}}' wx:key='{{item.id}}' @tap='address_Change({{item.id}})'>
+        <view class='item'>
+            <image src='../images/icon/location.png' class='icon1'/>
+            <view class='text'>
+                <view class='name'>{{item.name}}</view>
+                <view class='tel'>{{item.tel}}</view>
+                <view class='address'>{{item.address}}</view>
+            </view>
+            <image class='icon2' src='../images/icon/location.png'/>
+        </view>
+    </view>
+</view>
+</template>
+<script>
+    import wepy from 'wepy';
+    export default class address_manage extends wepy.component {
+        data={
+            temp: 0
+        }
+        props= {
+            list: {
+                type: Object,
+                default: null
+            }
+        }
+        methods={
+            address_Change(aid) {
+                console.log('change is active')
+                let that= this
+                that.temp= aid
+                that.$apply()
+                that.$emit('address_change',this.temp)
+            }
+        }
+    }
+</script>
+
+<style lang="less">
+.item{
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin-bottom: 18px;
+    margin-top: 20px;
+    background-color:#ffffff;
+    width: 100%;
+    height: 120rpx;
+    .icon1{
+        padding-left: 20px;
+        width: 15px;
+        height: 15px; 
+    }
+    .text{
+        padding: 10px 20px;
+        display: flex;
+        flex-wrap: wrap;
+        font-size: 15px;
+        background-color: #ffffff;
+        height: 50px;
+        width: 60%;
+        .name{
+            margin-right: 20px
+        }
+        .tel{
+            width:auto;
+        }.address{
+            width:auto;
+        }
+    }
+    .icon2{
+        position: absolute;
+        right: 20px;
+        width: 20px;
+        height: 20px;
+    }
+}
+</style>
+

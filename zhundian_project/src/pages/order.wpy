@@ -1,0 +1,155 @@
+<template>
+<view class='page'>
+  <!-- 顶部卡栏 -->
+  <view class='tab'>
+      <view class="item {{index==currentTab?'active':''}}" wx:for='{{list}}' 
+      wx:key='{{index}}' @tap='switchTab({{index}})'>
+        <view>{{item}}</view>
+      </view>
+  </view>
+  <tab_list :current_list.sync='showlist'></tab_list>
+  <!-- 底部加载信息 -->
+  <view class='loadmore' hidden='{{hideload}}'>
+    <view class='loadmore_tips'>加载中,请稍候</view>
+  </view>
+</view>
+</template>
+<script>
+  import wepy from 'wepy';
+  import Tab_list from '@/components/tab_list'
+  var currentTab_list= require('../utils/data')
+  export default class Order extends wepy.page {
+    config = {
+      navigationBarTitleText: '我的订单',
+      usingComponents:{
+        'wxc-avatar': "../../packages/@minui/wxc-avatar/dist/index"
+      }
+    }
+    components = {
+      tab_list: Tab_list
+    }
+    data = {
+      currentTab_list: currentTab_list.getcurrentTab_list(),
+      list: ['全部订单','待付款','进行中','待评价'],
+      currentTab: 0,
+      showlist: [],
+      temp_list: [],
+      temp: 3,      /* 以index做遍历，temp3代表每次加载四张订单 */
+      hideload: false
+    }
+    computed = {
+    }
+    methods = {
+      switchTab(e) {
+        let that= this
+        if(that.currentTab==e){
+          return;
+        }else{
+          that.currentTab= e
+        }
+        that.$apply()
+      }
+    }
+    events = {
+    }
+    loadInitList() {
+      let that= this
+      that.temp_list= that.currentTab_list[that.currentTab].dataset
+      // console.log(that.temp_list)
+      for(var i=0;i<=that.temp;i++){
+        that.showlist.push(that.temp_list[i])
+      }
+      that.$apply()
+    }
+    loadMoreList() {
+      let new_showlist=[]
+      let temp_list1= []
+      let that= this
+      that.hideload= true
+      let temp1= that.showlist.length
+      that.temp_list= []
+      that.temp_list= that.currentTab_list[that.currentTab].dataset
+      let temp2= that.temp_list.length
+      if(temp1<temp2){
+        if(temp2-temp1>=that.temp+1) {      /* 尾部全部加载 */
+          for(var i=temp1;i<=temp1+that.temp;i++) {
+            temp_list1.push(that.temp_list[i])
+            }}
+        if(temp2-temp1<=that.temp+1){       /*尾部不够加载 */
+          let last_temp= temp2-temp1
+          for(var i=temp1;i<temp1+last_temp;i++){
+            temp_list1.push(that.temp_list[i])
+            }}
+          console.log(temp_list1)
+          new_showlist= that.showlist.concat(temp_list1)
+          that.showlist= new_showlist
+          console.log('new showlist===')
+          that.hideload= false
+          that.$apply()
+          console.log(this.showlist)
+      }
+      else{return}
+    }
+    onLoad() {
+      let that= this
+      that.loadInitList()
+    }
+    onPullDownRefresh() {
+      wx.stopPullDownRefresh()
+    }
+    onReachBottom() {
+      let that= this
+      that.loadMoreList()
+    }
+    watch= {
+      currentTab() {    /*更换Tab */
+        let that= this
+        that.showlist=[]
+        that.temp_list= []
+        that.temp_list= that.currentTab_list[that.currentTab].dataset
+        console.log(that.temp_list)
+        for(var i=0;i<=that.temp;i++){
+        that.showlist.push(that.temp_list[i])
+        }
+        that.$apply()
+        console.log(this.showlist)
+        this.$broadcast('share',this.showlist)
+      },
+      showlist() {     /* 加载更多时 */
+        this.$broadcast('share',this.showlist)
+      }
+    }
+  }
+</script>
+<style lang="less">
+.tab{
+  width: 100%;
+  height: 80rpx;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20rpx;
+  .item{
+    display: flex;
+    height: 80rpx;
+    font-size: 26rpx;
+    align-items: center;
+    justify-content: center;
+  }.active{
+    border-bottom: 2rpx solid #e51c23;
+  }
+}
+.loadmore{
+  display: flex;
+  width: 100%;
+  height: 40rpx;
+  background-color: #ffffff;
+  align-items: center;
+  justify-content: center;
+  .loadmore_tips{
+    font-size: 25rpx;
+  }
+}
+
+</style>
+

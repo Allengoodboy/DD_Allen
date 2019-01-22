@@ -1,0 +1,51 @@
+<template>
+<view>
+    <manage @address_change.user='Change' :list.sync='address_list'></manage>
+    <view class='bottom'>添加服务地址</view>
+</view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import address_manage from '@/components/address_manage'
+  var address_list= require('../utils/data')
+  export default class Address_manage extends wepy.page {
+    config = {
+      navigationBarTitleText: '地址管理'
+    }
+    components = {
+        manage: address_manage
+    }
+    data = {
+      address_list: address_list.getaddress(),
+      id: 0
+    }
+    computed = {
+    }
+    methods = {
+      Change(e,evt) {
+        let that= this
+        that.id= e
+        that.$apply()
+        console.log('now address id==='+this.id)
+        wx.navigateTo({url: "../pages/make_order?aid="+this.id})
+      }
+    }
+    onLoad() {
+    }
+  }
+</script>
+
+<style lang="less">
+.bottom{
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    height: 45px;
+    width: 100%;
+    background-color: orange;
+}
+</style>
