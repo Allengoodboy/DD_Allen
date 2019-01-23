@@ -1,0 +1,126 @@
+<template>
+<view class='classify'>
+    <scroll-view scroll-y scroll-with-animation class='classify_catetory'>
+        <view class="name {{item.id==currentid?'active':''}}" wx:for='{{nav_list}}' wx:key='{{item.id}}'
+        @tap='changeNav({{item.id}})'>
+            {{item.text}}
+        </view>
+    </scroll-view>
+    <!-- <view class='item_name' wx:for='{{nav_list}}' wx:if='{{item.id==currendid}}'>{{item.name}}</view> -->
+    <view class='detail'>
+        <view class='item_name'>
+            <view class='text' wx:for='{{nav_list}}' wx:if='{{item.id==currentid}}'>{{item.text}}</view>
+        </view>
+        <scroll-view scroll-y scroll-with-animation class='classify_detail'>
+            <navigator class='single_detail' wx:for='{{detail_list}}' wx:key='{{index}}'
+            open-type='navigate' url='../pages/detail?aindex={{index}}'>
+                <wxc-avatar class='icon' src='{{item.icon_Path}}'></wxc-avatar>
+                    <view>
+                        <view class='name'>{{item.name}}</view>
+                        <view class='content'>{{item.content}}</view>
+                    </view>
+            </navigator>
+        </scroll-view>
+    </view>
+</view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  var nav_list= require('../utils/data')
+  var detail_list=require('../utils/data')
+  export default class Nav_list extends wepy.page {
+    config = {
+      navigationBarTitleText: "选择服务项目",
+      usingComponents: {
+          'wxc-avatar': "../../packages/@minui/wxc-avatar/dist/index"
+        }
+    }
+    components = {
+    }
+    data = {
+        currentid: 0,
+        nav_list: nav_list.getnavList(),
+        detail_list: detail_list.getdetailList()
+    }
+    computed = {
+    }
+    methods = {
+        changeNav(e) {
+            console.log('获得参数是:'+e)
+            let that= this
+            that.currentid= e
+            that.$apply()
+            console.log('currentid=='+this.currentid)
+        }
+    }
+    events = {
+    }
+    onLoad(e) {
+        let that= this
+        that.currentid= e.aid
+        that.$apply()
+        console.log("currentid=="+this.currentid)
+    }
+  }
+</script>
+
+<style lang="less">
+.classify {
+    display: flex;
+    flex-wrap: nowrap;
+    font-size: 28rpx;
+    .classify_catetory {
+        background-color:#eeeeee;
+        width: 25%;
+        .name {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 140rpx;
+        }.active {
+            background-color: #fff;
+        }
+    }
+    .detail{
+        width: 100%;
+        .item_name{
+            background-color: #fff;
+            font-size: 22rpx;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 35rpx;
+            .text{
+                margin-left: 45rpx;
+            }
+        }.classify_detail{
+            background-color: #fff;
+            width: 100%;
+            height: 100%;
+            .single_detail{
+                display: flex;
+                align-items: center;
+                height: 150rpx;
+                margin: 30rpx 40rpx;
+                border-bottom: 1rpx solid #dbdbdb;
+                .icon{
+                    width: 80rpx;
+                    height: 80rpx;
+                }
+                .name{
+                    font-size: 28rpx;
+                    margin-left: 20rpx
+                }.content{
+                    margin-top: 5rpx;
+                    margin-left: 20rpx;
+                    font-size: 22rpx;
+                }
+            }
+        }
+    }
+}
+
+</style>
+

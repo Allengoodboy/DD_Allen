@@ -1,0 +1,288 @@
+<template>
+  <view class='page'>
+    <view class='top'>
+      <view class="top_place">
+        <view class='top_text' @tap='showPopup()'>中山</view>
+        <view class='top_search'>
+          <!-- <view class='search'>ssss</view> -->
+          <wxc-input class='search' type='text' icon='search' placeholder='保洁开荒'></wxc-input>
+        </view>
+      </view>
+    </view>
+    <swiper class='swiper' indicator-active-color='gray' indicator-dots="true" autoplay="true" interval="3000" duration="1000" circular="true">
+      <block wx:for="{{adList}}" wx:key="{{item.id}}">
+        <swiper-item>
+          <image src="{{item.image_Path}}" class="slide-image"/>
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class='nav'>
+      <view class='nav_content'>
+        <navigator wx:for='{{navList}}' wx:if='{{item.id<=5}}' url="../pages/nav_list?aid={{item.id}}" open-type="navigate">
+            <view class='nav_one'>
+              <image src='{{item.image_Path}}' class='nav_icon'/>
+              <view class='nav_text'>{{item.text}}</view>
+            </view>
+        </navigator>
+      </view>
+      <view class='nav_content'>
+        <navigator wx:for='{{navList}}' wx:if='{{item.id>5&&item.id<=10}}' url="../pages/nav_list?aid={{item.id}}" open-type="navigate">
+          <view class='nav_one'>
+            <image src='{{item.image_Path}}' class='nav_icon'/>
+            <view class='nav_text'>{{item.text}}</view>
+          </view>
+        </navigator>
+      </view>
+    </view>
+    <!-- 图片魔方 -->
+    <view class='pic'>
+      <view class='first_line'>
+        <view class='first_child'>
+          <view class='text'>抽油烟机清洗</view>
+          <image src='../images/pic/test1.jpg' class='pic'/>
+        </view>
+        <view class='second_child'>
+          <view class='text'>空调清洗</view>
+          <image src='../images/pic/test1.jpg' class='pic'/>
+        </view>
+      </view>
+      <view class='second_line'>
+        <view class='first_child'>
+          <view class='text'>洗衣机清洗</view>
+          <image src='../images/pic/test1.jpg' class='pic'/>
+        </view>
+        <view class='second_child'>
+          <view class='its_child_one'>
+            <view class='text'>冰箱清洗</view>
+            <image src='../images/pic/test1.jpg' class='pic'/>
+          </view>
+          <view class='its_child_two'>
+            <view class='grand_child'>
+            <view class='text'>电器维修</view>
+            <image src='../images/pic/test1.jpg' class='pic'/>
+            </view>
+            <view class='grand_child'>
+            <view class='text'>灯具维修安装</view>
+            <image src='../images/pic/test1.jpg' class='pic'/>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- <wxc-popup animation-mode='top' align='top' status='{{}}'>
+
+    </wxc-popup> -->
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  var adList= require('../utils/data')
+  var navList= require('../utils/data')
+  export default class Index extends wepy.page {
+    config = {
+      usingComponents: {
+        'wxc-input': '../../packages/@minui/wxc-input/dist/index',
+        'wxc-popup': '../../packages/@minui/wxc-popup/dist/index'
+      }
+    }
+    components = {
+    }
+    data = {
+      adList: adList.getadList(),
+      navList: navList.getnavList()
+    }
+    computed = {
+    }
+    methods = {
+      showPopup() {
+      }
+    }
+    events = {
+    }
+    onLoad() {
+      console.log('dd')
+    }
+  }
+</script>
+
+<style lang="less">
+.top{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 80rpx;
+  background-color: white;
+  .top_place{
+    width: 90%;
+    height: 70rpx;
+    display: flex;
+    align-items: center;
+    margin: 4rpx 20rpx;
+    .top_text{
+      display: flex;
+      align-items: center;
+      width: 10%;
+      height: 70rpx;
+      margin-left: 15rpx;
+      font-size: 25rpx;
+    }.top_search{
+      align-items: center;
+      width: 90%;
+      height: 60rpx;
+      background-color:#eaebed;
+      margin-bottom: 10rpx;
+      border-radius: 10rpx;
+      .search{
+        display: block;
+        width: 100%;
+        height: 30rpx;
+        margin-bottom: 20rpx;
+      }
+    }    
+  }
+}
+
+.swiper {
+  height: 428rpx;
+}
+.slide-image {
+  width: 100%;
+  height: 100%;
+}
+.nav{
+  height: 355rpx;
+  background-color:white;
+  margin-bottom: 30rpx;
+  .nav_content{
+    display: flex;
+    color:black;
+    font-size: 10rpx;
+    justify-content:space-around;
+    padding: 15rpx 50rpx;
+    margin-bottom: 20rpx;
+    .nav_one{
+      display:flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .nav_icon{
+      height: 100rpx;
+      width: 100rpx;
+    }
+    .nav_text{
+      font-size: 20rpx;
+    }
+  }
+}
+.pic{
+  background-color: #ffffff;
+  width: 100%;
+  height: 390rpx;
+  display:flex;
+  flex-wrap: wrap;
+  font-size: 24rpx;
+  .first_line{
+    width: 100%;
+    height: 130rpx;
+    display: flex;
+    justify-content: flex-start;
+    .first_child{
+      width: 40%;
+      height: 130rpx;
+      border: 2rpx solid #dbdbdb;
+      position: relative;
+      .text{
+        margin: 10rpx 20rpx;
+      }
+      .pic{
+        position: absolute;
+        right: 15rpx;
+        bottom: 10rpx;
+        width: 60rpx;
+        height: 70rpx;
+      }
+    }.second_child{
+      width: 60%;
+      height: 130rpx;
+      border: 2rpx solid #dbdbdb;
+      position: relative;
+      .text{
+        margin: 10rpx 15rpx;
+      }.pic{
+        position:absolute;
+        right: 10rpx;
+        bottom: 7rpx;
+        height: 80rpx;
+        width: 280rpx;
+      }
+    }
+  }
+  .second_line{
+    width:100%;
+    height: 260rpx;
+    display: flex;
+    justify-content: flex-start;
+    .first_child{
+      width: 40%;
+      height: 260rpx;
+      border: 2rpx solid #dbdbdb;
+      display:flex;
+      flex-direction: column;
+      align-items: center;
+      .text{
+        margin-top: 30rpx;
+        margin-bottom: 28rpx;
+      }
+      .pic{
+        width: 110rpx;
+        height: 125rpx;
+      }
+    }
+    .second_child{
+      display:flex;
+      flex-wrap: wrap;
+      width: 60%;
+      height: 260rpx;
+      .its_child_one{
+        width: 100%;
+        height: 130rpx;
+        border: 2rpx solid #dbdbdb;
+        position: relative;
+        .text{
+          margin: 10rpx 15rpx;
+        }.pic{
+          position: absolute;
+          right: 20rpx;
+          bottom: 5rpx;
+          width: 100rpx;
+          height: 90rpx;
+        }
+      }
+      .its_child_two{
+        width: 100%;
+        height: 130rpx;
+        display: flex;
+        flex-wrap: nowrap;
+        .grand_child{
+          height: 130rpx;
+          width: 50%;
+          border: 2rpx solid #dbdbdb;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          .text{
+            margin: 10rpx;
+          }.pic{
+            width: 65rpx;
+            height: 65rpx;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+</style>
+

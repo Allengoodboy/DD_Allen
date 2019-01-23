@@ -1,0 +1,129 @@
+<template>
+    <view class='whole_list'>
+        <view class='single' wx:for='{{list}}'>
+            <view class='top'>
+                <wxc-avatar src='../images/pic/test1.jpg' class='icon'></wxc-avatar>
+                <view class='text'>{{item.name}}</view>
+                <view class='style'>{{item.style}}</view>
+                <view class='zt'>{{item.zt}}</view>
+            </view>
+            <view class='content'>
+                <view>
+                    <view class='text'>服务地址：{{item.address}}</view>
+                    <view>服务时间:{{item.time}}</view>
+                </view>
+                <view class='price'>￥120</view>
+            </view>
+            <view class='bottom'>
+                <button class='button'>立即付款</button>
+            </view>
+        </view>
+    </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+export default class Tab_list extends wepy.component{
+    props= {
+        current_list:{
+            type: Object
+        }
+    }
+    data= {
+        list: []
+    }
+    onLoad() {
+        let that=this
+        that.list=that.current_list
+        that.$apply()
+        // console.log(this.list)
+    }
+    events= {
+        share(newshowlist) {
+            let that= this
+            that.list=[]
+            that.list=newshowlist
+            that.$apply()
+        }
+    }
+}
+</script>
+
+<style lang="less">
+.whole_list{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    .single{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        background-color: #ffffff;
+        width: 90%;
+        height: 250rpx;
+        margin-top: 20rpx;
+        border-radius: 30rpx;
+        font-size: 22rpx;
+        .top{
+            position: relative;
+            display: flex;
+            align-items: center;
+            flex-wrap: nowrap;
+            height: 65rpx;
+            width: 100%;
+            margin-left: 25rpx;
+            border-bottom: 1rpx solid #eeeeee;
+            .icon{
+                width: 50rpx;
+                height: 50rpx;
+                margin-right: 20rpx
+            }.text{
+                font-size: 26rpx;
+                margin-right: 15rpx;
+            }.style{
+                font-size: 22rpx;
+                border-radius: 10rpx;    /*  文字未加边框*/
+            }.zt{
+                position: absolute;
+                right: 20rpx;
+                border-radius: 50rpx;
+                font-size: 22rpx;
+            }
+        }
+        .content{
+            position: relative;
+            height: 100rpx;
+            width: 100%;
+            margin-left: 25rpx;
+            border-bottom: 1rpx solid #eeeeee;
+            .text{
+                margin-bottom: 20rpx;
+            }.price{
+                position: absolute;
+                color: #e51c23;
+                font-size: 32rpx;
+                right: 15rpx;
+                bottom: 5rpx;
+            }
+        }
+        .bottom{
+            position: relative;
+            height: 60rpx;
+            width: 100%;
+            .button{
+                margin-top: 30rpx; 
+                position: absolute;
+                right: 15rpx;
+                bottom: 2rpx;
+                background-color: #ffffff;
+                font-size: 25rpx;
+                border-color:#1aad19;
+                color: #1aad19;
+                text-align: center;
+                }
+            }
+        }
+}
+</style>
